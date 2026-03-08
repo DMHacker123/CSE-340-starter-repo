@@ -1,18 +1,23 @@
-<h1>
-    <%= title %>
-</h1>
+<h1><%= title %></h1>
 
 <ul>
-    <% if (typeof vehicles !=="undefined" ) { %>
-        <% vehicles.forEach(vehicle=> { %>
-            <li>
-                <p>
-                    <%= vehicle.name %>
-                </p>
-                <img src="<%= vehicle.image %>" alt="<%= vehicle.name %>" width="200">
-            </li>
-            <% }) %>
-                <% } else { %>
-                    <li>No vehicles available</li>
-                    <% } %>
+  <% if (typeof vehicles !== "undefined" && vehicles.length > 0) { %>
+
+    <% vehicles.forEach(vehicle => { %>
+      <li>
+        <p><%= vehicle.name %></p>
+
+        <img 
+          src="<%= vehicle.image %>" 
+          alt="<%= vehicle.name %>" 
+          width="200"
+        >
+      </li>
+    <% }) %>
+
+  <% } else { %>
+
+    <li>No vehicles available</li>
+
+  <% } %>
 </ul>
