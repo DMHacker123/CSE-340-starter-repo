@@ -5,19 +5,21 @@
   box-sizing: border-box;
 }
 
-/* Page background (checkerboard) */
+/* BODY */
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
   background-image: url("/images/site/checkerboard.jpg");
   background-repeat: repeat;
 }
 
-/* Center white page */
+/* PAGE WRAPPER */
+
 #wrapper {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 30px auto;
-  background: white;
+  background: #ffffff;
   padding: 20px;
   border: 5px solid #00bcd4;
   border-radius: 8px;
@@ -41,9 +43,10 @@ header {
 #tools a {
   text-decoration: none;
   color: #333;
+  font-size: 0.9rem;
 }
 
-/* NAVIGATION BAR */
+/* NAVIGATION */
 
 nav {
   margin-top: 10px;
@@ -52,14 +55,15 @@ nav {
 nav ul {
   display: flex;
   justify-content: space-around;
-  background: #333;
+  background: #2d2f3a;
   padding: 10px;
   list-style: none;
+  margin: 0;
 }
 
 nav a {
-  text-decoration: none;
   color: white;
+  text-decoration: none;
   font-weight: bold;
 }
 
@@ -67,32 +71,29 @@ nav a {
 
 .hero {
   position: relative;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  text-align: center;
+  margin-top: 30px;
 }
 
 .hero img {
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
-  margin-right: 300px;
 }
 
-/* Delorean info box */
+/* HERO INFO BOX */
 
 .hero-info {
   position: absolute;
   top: 40px;
-  left: 40px;
-
-  background: rgba(255, 255, 255, 0.75);
+  left: 60px;
+  background: rgba(255, 255, 255, 0.85);
   padding: 15px 20px;
   border-radius: 5px;
 }
 
 .hero-info h2 {
-  color: #00a8cc;
   margin: 0;
+  color: #00a8cc;
 }
 
 .hero-info ul {
@@ -100,20 +101,28 @@ nav a {
   padding: 0;
   margin: 10px 0;
   color: #00a8cc;
+  font-weight: bold;
 }
 
-/* Button */
+/* CTA BUTTON */
 
 .cta {
   display: inline-block;
   margin-top: 10px;
-  background: #00a8cc;
-  color: white;
+  background: #005f7a;
+  /* darker color for accessibility */
+  color: #ffffff;
   padding: 10px 20px;
   text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
 }
 
-/* BOTTOM GRID */
+.cta:hover {
+  background: #004a61;
+}
+
+/* HOME GRID */
 
 .home-grid {
   display: grid;
@@ -127,7 +136,7 @@ nav a {
 .upgrade-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 20px;
 }
 
 .upgrade-card {
@@ -137,7 +146,7 @@ nav a {
 .upgrade-card img {
   background: #00a8cc;
   padding: 20px;
-  width: 100px;
+  width: 120px;
 }
 
 .upgrade-card a {
@@ -145,13 +154,13 @@ nav a {
   margin-top: 10px;
   color: #0077cc;
   font-weight: bold;
-  text-decoration: underline;
 }
 
 /* REVIEWS */
 
 .reviews ul {
-  line-height: 2;
+  line-height: 1.8;
+  padding-left: 20px;
 }
 
 /* FOOTER */
@@ -161,6 +170,12 @@ footer {
   border-top: 1px solid #ccc;
   padding-top: 10px;
   font-size: 0.9rem;
+}
+
+/* ACCESSIBILITY */
+
+a:focus {
+  outline: 3px solid #00bcd4;
 }
 
 /* MOBILE */
