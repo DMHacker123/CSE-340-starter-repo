@@ -11,7 +11,9 @@
             "server": "localhost",
             "driver": "PostgreSQL",
             "name": "render.com",
-            "connectString": "postgresql://cse340dm:qZ0Mf0UcoQ6FkLiP68M2pDxsrPNaw1vy@dpg-d6l0con5r7bs738uhv80-a.virginia-postgres.render.com/cse340dm_gfsd"
+            "database": "demo345_6au2",
+            "username": "demo345",
+            "connectString": "postgresql://demo345:ixM2weEnyhgRxs5LHDZLvMAkUcILAqaf@dpg-d6o7lkaa214c73b5cfm0-a.virginia-postgres.render.com/demo345_6au2"
         }
     ]
 }
