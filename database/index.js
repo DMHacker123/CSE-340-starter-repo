@@ -1,24 +1,18 @@
+// /database/index.js
 const { Pool } = require("pg")
 require("dotenv").config()
 
-let pool
+// Create the PostgreSQL pool
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl:
+    // Use SSL for production or if connecting to Render DB
+    process.env.NODE_ENV === "production" || process.env.DATABASE_URL?.includes("render.com")
+      ? { rejectUnauthorized: false }
+      : false,
+})
 
-if (process.env.NODE_ENV === "production") {
-  // ✅ Render (production)
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  })
-} else {
-  // ✅ Local development
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  })
-}
-
-// Optional: keep your query wrapper
+// Query wrapper for easier logging and error handling
 module.exports = {
   async query(text, params) {
     try {
