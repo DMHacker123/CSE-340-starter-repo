@@ -19,7 +19,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const nav = await utilities.getNav()
   const className = data[0].classification_name
 
-  res.render("./inventory/classification", {
+  res.render("inventory/classification", {
     title: `${className} vehicles`,
     nav,
     grid,
@@ -46,6 +46,13 @@ invCont.buildByInventoryId = async function (req, res, next) {
     nav,
     vehicleHTML,
   })
+}
+
+/* ***************************
+ * Intentional Error Function
+ * ************************** */
+invCont.triggerError = async function (req, res, next) {
+  throw new Error("Intentional 500 error for testing")
 }
 
 module.exports = invCont

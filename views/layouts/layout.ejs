@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('partials/head') %>
 
-    <body>
-        <div id="wrapper">
+<head>
+    <%- include('partials/head') %>
+</head>
 
-            <%- include('partials/header') %>
+<body>
+    <div id="wrapper">
 
-                <nav>
-                    <%- nav %>
-                </nav>
+        <!-- Header -->
+        <%- include('partials/header') %>
 
-                <main>
-                    <%- body %>
-                </main>
+            <!-- Navigation -->
+            <nav>
+                <%- nav %>
+            </nav>
 
-                <%- include('partials/footer') %>
+            <!-- Main Content -->
+            <main>
+                <%- body %>
+            </main>
 
-        </div>
-        <script src="/js/script.js"></script>
-    </body>
+            <!-- Footer (ONLY ONCE) -->
+            <%- include('partials/footer') %>
+
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
 
 </html>

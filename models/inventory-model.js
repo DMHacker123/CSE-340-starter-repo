@@ -24,6 +24,7 @@ async function getInventoryByClassificationId(classification_id) {
     return data.rows
   } catch (error) {
     console.error("getInventoryByClassificationId error:", error)
+    throw error   // ✅ VERY IMPORTANT
   }
 }
 
@@ -42,6 +43,7 @@ async function getInventoryById(inv_id) {
     return data.rows[0]
   } catch (error) {
     console.error("getInventoryById error:", error)
+    throw error   // ✅ VERY IMPORTANT
   }
 }
 

@@ -5,22 +5,20 @@ const utilities = require("../utilities/")
 
 // Classification view
 router.get(
-  "/detail/:id",
-  utilities.handleErrors(invController.buildByInventoryId)
+  "/type/:classificationId",
+  utilities.handleErrors(invController.buildByClassificationId)
 )
 
-// ✅ Inventory detail route (FINAL FIX)
+// Inventory detail route
 router.get(
   "/detail/:id",
   utilities.handleErrors(invController.buildByInventoryId)
 )
 
-// Error test route
+// ✅ Intentional error route (ONLY ONE)
 router.get(
   "/error",
-  utilities.handleErrors(async (req, res) => {
-    throw new Error("Intentional server error")
-  })
+  utilities.handleErrors(invController.triggerError)
 )
 
 module.exports = router
