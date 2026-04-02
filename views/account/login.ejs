@@ -1,0 +1,53 @@
+<%- include("../layouts/partials/head") %>
+
+    <body>
+        <header>
+            <h1>
+                <%= title %>
+            </h1>
+        </header>
+
+        <main>
+
+            <!-- Flash Messages -->
+            <% if (messages.notice) { %>
+                <div class="flash-message">
+                    <% messages.notice.forEach(function(message) { %>
+                        <p>
+                            <% if (typeof message !=="undefined" ) { %>
+                                <%= message %>
+                                    <% } %>
+                            <% if (typeof errors !=="undefined" ) { %>
+                                <%- errors %>
+                                    <% } %>
+                        </p>
+                        <% }) %>
+                </div>
+                <% } %>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" action="/account/login" method="post" novalidate>
+                    
+                        <label for="email">Email:</label>
+                        <input type="email" name="account_email" id="email" required>
+                    
+                        <label for="password">Password:</label>
+                    
+                        
+                    
+                        <input type="password" name="account_password" id="password" required>
+                    
+                        <button type="submit">Login</button>
+                    
+                    </form>
+
+                    <!-- Register Link -->
+                    <p>
+                        Don't have an account?
+                        <a href="/account/register">Register here</a>
+                    </p>
+
+        </main>
+
+        <%- include("../layouts/partials/footer") %>
+    </body>

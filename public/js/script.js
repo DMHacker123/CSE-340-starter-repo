@@ -13,3 +13,36 @@ if (menuButton && nav) {
     nav.classList.toggle("open");
   });
 }
+
+// ==============================
+// Form Validation (Min 3 chars)
+// ==============================
+
+const inputs = document.querySelectorAll(".validate");
+
+if (inputs.length > 0) {
+  inputs.forEach(input => {
+
+    input.addEventListener("blur", () => {
+      input.dataset.touched = "true";
+      validate(input);
+    });
+
+    input.addEventListener("input", () => {
+      if (input.dataset.touched === "true") {
+        validate(input);
+      }
+    });
+
+  });
+}
+
+function validate(input) {
+  if (input.value.length < 3) {
+    input.classList.add("invalid");
+    input.classList.remove("valid");
+  } else {
+    input.classList.add("valid");
+    input.classList.remove("invalid");
+  }
+}

@@ -9,7 +9,7 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f5f5f5;
+  background-color: #f4f4f4;
   color: #222;
   background-image: url("/images/site/checkerboard.jpg");
   background-repeat: repeat;
@@ -38,19 +38,18 @@ header {
 h1 {
   color: red;
   margin: 0;
-  background-color: transparent;
 }
 
 .siteName a {
   font-size: 1.8rem;
   font-weight: bold;
   text-decoration: none;
-  color: #333;
+  color: #fff;
 }
 
 #tools a {
   text-decoration: none;
-  color: #333;
+  color: #fff;
   font-size: 0.9rem;
 }
 
@@ -192,6 +191,133 @@ nav a:hover {
   font-size: 1rem;
 }
 
+/* *************** FORM & VALIDATION *************** */
+.password-info {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* Invalid input */
+input:required:invalid,
+input:focus:invalid {
+  border: 2px solid red;
+}
+
+/* Valid input */
+input:required:valid {
+  border: 2px solid green;
+}
+
+.notice {
+  color: green;
+  background-color: #e6ffe6;
+  border: 1px solid green;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+/* FORM CONTAINER */
+.form-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background-color: #1fa3c4;
+  color: #000;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+.form-container h1 {
+  margin-bottom: 10px;
+}
+
+.form-note {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* FORM BOX */
+.styled-form {
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.styled-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.styled-form input,
+.styled-form select,
+.styled-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 3px;
+}
+
+.styled-form textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.styled-form button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.styled-form button:hover {
+  background-color: #333;
+}
+
+/* ERRORS */
+.errors {
+  color: #900;
+  background-color: #ffe6e6;
+  border-left: 5px solid red;
+  padding: 10px;
+  margin-bottom: 15px;
+  list-style-type: none;
+}
+
+.errors li {
+  margin-left: 0;
+}
+
+/* BACK LINK */
+.back-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: black;
+  text-decoration: none;
+}
+
+/* VALIDATION STATES */
+.validate {
+  background-color: white;
+  border: 1px solid #ccc;
+}
+
+.valid {
+  background-color: #d4edda;
+  border: 2px solid #28a745;
+}
+
+.invalid {
+  background-color: #f8d7da;
+  border: 2px solid #dc3545;
+}
+
 /* *************** FOOTER *************** */
 footer {
   margin-top: 40px;
@@ -205,7 +331,7 @@ a:focus {
   outline: 3px solid #00bcd4;
 }
 
-/* *************** MEDIA QUERIES / MOBILE *************** */
+/* *************** MEDIA QUERIES *************** */
 @media (max-width: 700px) {
   nav ul {
     flex-direction: column;
@@ -222,4 +348,21 @@ a:focus {
     position: static;
     margin-bottom: 20px;
   }
+}
+
+/* *************** FLASH MESSAGE *************** */
+.flash-message {
+  background-color: #ffdddd;
+  color: #900;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+/* *************** FORM GENERIC *************** */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 300px;
 }
