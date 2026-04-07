@@ -207,6 +207,9 @@ input:focus:invalid {
 /* Valid input */
 input:required:valid {
   border: 2px solid green;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
 }
 
 .notice {
@@ -215,6 +218,7 @@ input:required:valid {
   border: 1px solid green;
   padding: 10px;
   margin-bottom: 15px;
+  border-radius: 5px;
 }
 
 /* FORM CONTAINER */
@@ -364,5 +368,10 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 300px;
+  max-width: 400px;
+  margin: auto;
+  background: #0ea5b7;
+  padding: 20px;
+  border-radius: 8px;
+
 }

@@ -3,12 +3,15 @@ const router = new express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/")
 
-// ✅ MUST BE HERE (TOP)
 const {
   classificationValidate,
   inventoryValidate,
   handleErrors
 } = require("../utilities/inventory-validation")
+
+console.log("checkJWTToken:", utilities.checkJWTToken)
+console.log("checkEmployeeOrAdmin:", utilities.checkEmployeeOrAdmin)
+console.log("buildManagementView:", invController.buildManagementView)
 
 // Routes
 router.get(
@@ -21,14 +24,18 @@ router.get(
   utilities.handleErrors(invController.buildByInventoryId)
 )
 
+// ✅ REMOVE ERROR ROUTE (not implemented)
+// router.get("/error", ...)
+
 router.get(
-  "/error",
-  utilities.handleErrors(invController.triggerError)
+  "/",
+  utilities.checkJWTToken,
+  utilities.checkEmployeeOrAdmin,
+  utilities.handleErrors(invController.buildManagementView)
 )
 
-router.get("/", invController.buildManagementView)
-
 router.get("/add-classification", invController.buildAddClassification)
+
 router.post(
   "/add-classification",
   classificationValidate,
@@ -36,14 +43,15 @@ router.post(
   invController.addClassification
 )
 
-console.log("DEBUG:", {
-  classificationValidate,
-  inventoryValidate,
-  handleErrors,
-  addClassification: invController.addClassification,
-  addInventory: invController.addInventory
-})
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+)
+
+router.get("/edit/:inv_id", invController.editInventoryView)
+
 router.get("/add-inventory", invController.buildAddInventory)
+
 router.post(
   "/add-inventory",
   inventoryValidate,
@@ -51,4 +59,13 @@ router.post(
   invController.addInventory
 )
 
+// ✅ DELETE ROUTES
+router.get("/delete/:inv_id", invController.buildDeleteView)
+router.post("/delete/", invController.deleteInventory)
+router.post(
+  "/update-inventory",
+  inventoryValidate,
+  handleErrors,
+  invController.updateInventory
+)
 module.exports = router

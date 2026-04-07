@@ -1,0 +1,60 @@
+<div class="form-container">
+    <h1>
+        <%= title %>
+    </h1>
+
+    <% if (errors) { %>
+        <ul class="errors">
+            <% errors.forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
+
+            <p class="form-note">ALL FIELDS ARE REQUIRED.</p>
+
+            <!-- ✅ CHANGE ACTION -->
+            <form action="/inv/update-inventory" method="post" class="styled-form">
+
+                <!-- ✅ hidden id -->
+                <input type="hidden" name="inv_id" value="<%= invData.inv_id %>">
+
+                <label>Classification</label>
+                <%- classificationList %>
+
+                    <label>Make</label>
+                    <input type="text" name="inv_make" required value="<%= invData.inv_make %>">
+
+                    <label>Model</label>
+                    <input type="text" name="inv_model" required value="<%= invData.inv_model %>">
+
+                    <label>Year</label>
+                    <input type="number" name="inv_year" required value="<%= invData.inv_year %>">
+
+                    <label>Description</label>
+                    <textarea name="inv_description" required>
+<%= invData.inv_description %></textarea>
+
+                    <label>Image Path</label>
+                    <input type="text" name="inv_image" required value="<%= invData.inv_image %>">
+
+                    <label>Thumbnail Path</label>
+                    <input type="text" name="inv_thumbnail" required value="<%= invData.inv_thumbnail %>">
+
+                    <label>Price</label>
+                    <input type="number" name="inv_price" required value="<%= invData.inv_price %>">
+
+                    <label>Miles</label>
+                    <input type="number" name="inv_miles" required value="<%= invData.inv_miles %>">
+
+                    <label>Color</label>
+                    <input type="text" name="inv_color" required value="<%= invData.inv_color %>">
+
+                    <!-- ✅ CHANGE BUTTON -->
+                    <button type="submit">Update Inventory</button>
+            </form>
+
+            <a href="/inv">← Back to Management</a>
+</div>

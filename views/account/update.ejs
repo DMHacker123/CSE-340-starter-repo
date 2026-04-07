@@ -1,0 +1,17 @@
+<form method="POST" action="/account/update">
+    <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+
+    <input type="text" name="account_firstname" value="<%= accountData.account_firstname %>">
+    <input type="text" name="account_lastname" value="<%= accountData.account_lastname %>">
+    <input type="email" name="account_email" value="<%= accountData.account_email %>">
+
+    <button type="submit">Update Info</button>
+</form>
+
+<form method="POST" action="/account/update-password">
+    <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+
+    <input type="password" name="account_password">
+
+    <button type="submit">Change Password</button>
+</form>

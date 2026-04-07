@@ -2,10 +2,11 @@
     <%= title %>
 </h1>
 
-<% if (message) { %>
-    <p class="notice">
-        <%= message %>
-    </p>
+<!-- ✅ Flash Message (ONLY ONCE) -->
+<% if (message && message.length> 0) { %>
+    <div class="notice">
+        <%= message[0] %>
+    </div>
     <% } %>
 
         <h2>Inventory Management</h2>
@@ -14,3 +15,21 @@
             <li><a href="/inv/add-classification">Add New Classification</a></li>
             <li><a href="/inv/add-inventory">Add New Vehicle</a></li>
         </ul>
+
+        <h2>Manage Inventory</h2>
+
+        <p>Select a classification to view inventory items.</p>
+
+        <!-- ✅ Classification Dropdown -->
+        <%- classificationList %>
+
+            <!-- ✅ Table where data will appear -->
+            <table id="inventoryDisplay"></table>
+
+            <!-- ✅ No JavaScript fallback -->
+            <noscript>
+                <p>Please enable JavaScript to view inventory data.</p>
+            </noscript>
+
+            <!-- ✅ Link to JS file -->
+            <script src="/js/inventory.js"></script>

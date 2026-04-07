@@ -1,29 +1,24 @@
-const validate = require("../utilities/account-validation")
 const express = require("express")
 const router = new express.Router()
 
 const utilities = require("../utilities/")
 const accountController = require("../controllers/accountController")
+const validate = require("../utilities/account-validation")
 
-// GET login view
-router.get(
-  "/login",
-  utilities.handleErrors(accountController.buildLogin)
-)
-
+// Login
+router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.post(
   "/login",
+  validate.loginRules(),
+  validate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
 )
 
-// Process the login attempt
-router.post(
-  "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
-)
+// Account dashboard
+router.get("/", utilities.handleErrors(accountController.buildAccountManagement))
 
+// Register
+router.get("/register", utilities.handleErrors(accountController.buildRegister))
 router.post(
   "/register",
   validate.registrationRules(),
@@ -31,9 +26,12 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 )
 
-router.get(
-  "/register",
-  utilities.handleErrors(accountController.buildRegister)
-)
+// Logout
+router.get("/logout", accountController.logout)
+
+// Update account
+router.get("/update/:account_id", accountController.buildUpdateView)
+router.post("/update", accountController.updateAccount)
+router.post("/update-password", accountController.updatePassword)
 
 module.exports = router

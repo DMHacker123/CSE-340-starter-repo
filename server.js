@@ -19,6 +19,8 @@ const accountRoute = require("./routes/accountRoute")
 
 const bodyParser = require("body-parser")
 
+const cookieParser = require("cookie-parser")
+
 /* ***********************
  * Middleware Section
  *************************/
@@ -27,9 +29,6 @@ const bodyParser = require("body-parser")
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-/* ***********************
- * Session Middleware
- *************************/
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -51,6 +50,8 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates

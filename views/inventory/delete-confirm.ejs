@@ -1,0 +1,26 @@
+<h1>Delete <%= itemName %>
+</h1>
+
+<p><strong>Confirm Deletion - This action cannot be undone.</strong></p>
+
+<form action="/inv/delete" method="post">
+
+    <!-- Hidden ID -->
+    <input type="hidden" name="inv_id" value="<%= invData.inv_id %>">
+
+    <label>Make</label>
+    <input type="text" value="<%= invData.inv_make %>" readonly>
+
+    <label>Model</label>
+    <input type="text" value="<%= invData.inv_model %>" readonly>
+
+    <label>Price</label>
+    <input type="text" value="<%= invData.inv_price %>" readonly>
+
+    <label>Year</label>
+    <input type="text" value="<%= invData.inv_year %>" readonly>
+
+    <button type="submit">Delete Item</button>
+</form>
+
+<a href="/inv/">Cancel</a>
