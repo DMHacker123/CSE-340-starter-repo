@@ -3,11 +3,10 @@
         <a href="/" title="Return to home page">CSE Motors</a>
     </span>
 
-    <div id="tools">
-        <% if (locals.accountData) { %>
+    <div id="tools" aria-label="Account management">
+        <% if (accountData) { %>
             <a href="/account/">
-                Welcome <%= locals.accountData.account_firstname %>
-                    (<%= locals.accountData.account_type %>)
+                Welcome <%= accountData.account_firstname %> (<%= accountData.account_type %>)
             </a>
             <a href="/account/logout">Logout</a>
             <% } else { %>

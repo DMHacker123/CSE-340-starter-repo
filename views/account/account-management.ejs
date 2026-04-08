@@ -22,12 +22,20 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="/account/password/<%= accountData.account_id %>">
+                            Change Password
+                        </a>
+                    </li>
+
                     <li><a href="/account/logout">Logout</a></li>
                 </ul>
 
                 <% if (accountData.account_type==="Employee" || accountData.account_type==="Admin" ) { %>
                     <h3>Inventory Management</h3>
-                    <a href="/inv/">Manage Inventory</a>
+                    <ul>
+                        <li><a href="/inv/">Manage Inventory</a></li>
+                    </ul>
                     <% } %>
 
                         <% } else { %>

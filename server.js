@@ -52,7 +52,11 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(utilities.checkJWTToken)
-
+app.use((req, res, next) => {
+  res.locals.accountData = req.session.accountData || null;
+  res.locals.loggedin = req.session.loggedin || false;
+  next();
+});
 /* ***********************
  * View Engine and Templates
  *************************/

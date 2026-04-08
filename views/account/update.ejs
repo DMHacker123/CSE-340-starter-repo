@@ -1,17 +1,59 @@
-<form method="POST" action="/account/update">
-    <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+<div class="form-container">
+    <h1>
+        <%= title %>
+    </h1>
 
-    <input type="text" name="account_firstname" value="<%= accountData.account_firstname %>">
-    <input type="text" name="account_lastname" value="<%= accountData.account_lastname %>">
-    <input type="email" name="account_email" value="<%= accountData.account_email %>">
+    <% if (messages.notice) { %>
+        <div class="notice">
+            <%= messages.notice %>
+        </div>
+        <% } %>
 
-    <button type="submit">Update Info</button>
-</form>
+            <% if (errors) { %>
+                <ul class="errors">
+                    <% errors.forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
 
-<form method="POST" action="/account/update-password">
-    <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+                    <!-- UPDATE ACCOUNT INFO -->
+                    <form method="POST" action="/account/update" class="styled-form">
 
-    <input type="password" name="account_password">
+                        <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
 
-    <button type="submit">Change Password</button>
-</form>
+                        <label for="account_firstname">First Name</label>
+                        <input type="text" id="account_firstname" name="account_firstname"
+                            value="<%= accountData.account_firstname %>" required>
+
+                        <label for="account_lastname">Last Name</label>
+                        <input type="text" id="account_lastname" name="account_lastname"
+                            value="<%= accountData.account_lastname %>" required>
+
+                        <label for="account_email">Email</label>
+                        <input type="email" id="account_email" name="account_email"
+                            value="<%= accountData.account_email %>" required>
+
+                        <button type="submit">Update Info</button>
+                    </form>
+
+                    <!-- CHANGE PASSWORD -->
+                    <form method="POST" action="/account/update-password" class="styled-form">
+
+                        <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+
+                        <label for="account_password">New Password</label>
+                        <input type="password" id="account_password" name="account_password" required
+                            pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="Must contain at least 8 characters, including uppercase, lowercase, and a number">
+
+                        <p class="password-info">
+                            Password must be at least 8 characters and include:
+                            1 uppercase letter, 1 lowercase letter, and 1 number.
+                        </p>
+
+                        <button type="submit">Change Password</button>
+                    </form>
+</div>
