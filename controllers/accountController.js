@@ -54,9 +54,13 @@ accountController.accountLogin = async function (req, res) {
         expiresIn: 3600,
       });
 
-      res.cookie("jwt", token, { httpOnly: true });
-      return res.redirect("/account/");
-    }
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: false,        // VERY IMPORTANT (localhost)
+        sameSite: "lax",
+        path: "/",
+        maxAge: 3600 * 1000
+      });
 
     req.flash("notice", "Incorrect password.");
     return res.render("account/login", { title: "Login", nav });
