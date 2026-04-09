@@ -32,16 +32,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Session (used for flash messages only)
+app.set("trust proxy", 1); // ✅ REQUIRED for Render (HTTPS)
+
 app.use(
   session({
     store: new (require("connect-pg-simple")(session))({
       createTableIfMissing: true,
       pool,
     }),
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET, // ✅ FIXED
+    resave: false, // 🔥 better
+    saveUninitialized: false, // 🔥 better
     name: "sessionId",
+    cookie: {
+      secure: true, // ✅ required on Render (HTTPS)
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60, // 1 hour
+    },
   }),
 );
 
