@@ -1,7 +1,7 @@
+require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const accountModel = require("../models/account-model");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const utilities = require("../utilities/");
 
 const accountController = {};
@@ -31,6 +31,8 @@ accountController.buildLogin = async function (req, res) {
 
 /* Login process */
 accountController.accountLogin = async function (req, res) {
+  console.log("SECRET:", process.env.ACCESS_TOKEN_SECRET);
+
   const { account_email, account_password } = req.body;
   const nav = await utilities.getNav();
 
