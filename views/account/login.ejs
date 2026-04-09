@@ -9,21 +9,29 @@
 
         <main>
 
-            <!-- Flash Messages -->
-            <% if (messages.notice) { %>
-                <div class="flash-message">
-                    <% messages.notice.forEach(function(message) { %>
-                        <p>
-                            <% if (typeof message !=="undefined" ) { %>
-                                <%= message %>
-                                    <% } %>
-                            <% if (typeof errors !=="undefined" ) { %>
-                                <%- errors %>
-                                    <% } %>
-                        </p>
-                        <% }) %>
-                </div>
-                <% } %>
+<!-- Flash Messages -->
+<% if (typeof messages !=="undefined" && messages.notice) { %>
+    <div class="flash-message">
+        <% messages.notice.forEach(function(message) { %>
+            <p>
+                <% if (typeof message !=="undefined" ) { %>
+                    <%= message %>
+                        <% } %>
+            </p>
+            <% }) %>
+    </div>
+    <% } %>
+
+    <!-- Validation Errors -->
+    <% if (typeof errors !=="undefined" && errors.length> 0) { %>
+        <ul class="errors">
+            <% errors.forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
 
                     <!-- Login Form -->
                     <form id="loginForm" action="/account/login" method="post" novalidate>

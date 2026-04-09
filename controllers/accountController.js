@@ -24,8 +24,8 @@ accountController.buildLogin = async function (req, res) {
   res.render("account/login", {
     title: "Login",
     nav,
-    messages: req.flash(),
-    errors: null,
+    errors: [],
+    messages: req.flash ? req.flash() : {},
   });
 };
 
@@ -42,6 +42,8 @@ accountController.accountLogin = async function (req, res) {
       return res.status(400).render("account/login", {
         title: "Login",
         nav,
+        errors: null,
+        messages: req.flash(),
       });
     }
 
@@ -59,7 +61,7 @@ accountController.accountLogin = async function (req, res) {
 
       res.cookie("jwt", token, {
         httpOnly: true,
-        secure: false, // for localhost
+        secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
         maxAge: 3600 * 1000,
@@ -71,6 +73,8 @@ accountController.accountLogin = async function (req, res) {
       return res.status(400).render("account/login", {
         title: "Login",
         nav,
+        errors: null,
+        messages: req.flash(),
       });
     }
   } catch (err) {
