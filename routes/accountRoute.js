@@ -4,7 +4,7 @@ const router = new express.Router();
 const utilities = require("../utilities/");
 const accountController = require("../controllers/accountController");
 const validate = require("../utilities/account-validation");
-
+console.log("accountLogin:", accountController.accountLogin);
 // Login
 router.get("/login", utilities.handleErrors(accountController.buildLogin));
 router.post(

@@ -6,18 +6,22 @@ const utilities = require("../utilities/");
 
 const accountController = {};
 
-/* Account dashboard */
+/* ***************************
+ *  Account Management View
+ * ************************** */
 accountController.buildAccountManagement = async function (req, res) {
   const nav = await utilities.getNav();
 
   res.render("account/account-management", {
     title: "Account Management",
     nav,
-    accountData: res.locals.accountData, // ✅ IMPORTANT
+    accountData: res.locals.accountData,
   });
 };
 
-/* Login view */
+/* ***************************
+ *  Login View
+ * ************************** */
 accountController.buildLogin = async function (req, res) {
   const nav = await utilities.getNav();
 
@@ -29,7 +33,9 @@ accountController.buildLogin = async function (req, res) {
   });
 };
 
-/* Login process */
+/* ***************************
+ *  Login Process
+ * ************************** */
 accountController.accountLogin = async function (req, res) {
   const { account_email, account_password } = req.body;
   const nav = await utilities.getNav();
@@ -39,7 +45,10 @@ accountController.accountLogin = async function (req, res) {
 
     if (!accountData) {
       req.flash("notice", "Invalid credentials.");
-      return res.status(400).render("account/login", { title: "Login", nav });
+      return res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+      });
     }
 
     const match = await bcrypt.compare(
@@ -56,20 +65,43 @@ accountController.accountLogin = async function (req, res) {
 
       res.cookie("jwt", token, {
         httpOnly: true,
-        secure: false,        // VERY IMPORTANT (localhost)
+        secure: false, // for localhost
         sameSite: "lax",
         path: "/",
-        maxAge: 3600 * 1000
+        maxAge: 3600 * 1000,
       });
 
-    req.flash("notice", "Incorrect password.");
-    return res.render("account/login", { title: "Login", nav });
+      return res.redirect("/account/");
+    } else {
+      req.flash("notice", "Incorrect password.");
+      return res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+      });
+    }
   } catch (err) {
-    res.status(500).send("Server error");
+    console.error(err);
+    return res.status(500).send("Server error");
   }
 };
 
-/* Register */
+/* ***************************
+ *  Register View
+ * ************************** */
+accountController.buildRegister = async function (req, res) {
+  const nav = await utilities.getNav();
+
+  res.render("account/register", {
+    title: "Register",
+    nav,
+    messages: req.flash(),
+    errors: null,
+  });
+};
+
+/* ***************************
+ *  Register Process
+ * ************************** */
 accountController.registerAccount = async function (req, res) {
   const {
     account_firstname,
@@ -77,14 +109,18 @@ accountController.registerAccount = async function (req, res) {
     account_email,
     account_password,
   } = req.body;
+
   const nav = await utilities.getNav();
 
   try {
     const exists = await accountModel.checkExistingEmail(account_email);
 
     if (exists) {
-      req.flash("notice", "Email exists.");
-      return res.render("account/register", { title: "Register", nav });
+      req.flash("notice", "Email already exists.");
+      return res.render("account/register", {
+        title: "Register",
+        nav,
+      });
     }
 
     const hash = await bcrypt.hash(account_password, 10);
@@ -96,14 +132,17 @@ accountController.registerAccount = async function (req, res) {
       hash,
     );
 
-    req.flash("notice", "Registered successfully.");
-    res.redirect("/account/login");
+    req.flash("notice", "Registration successful. Please log in.");
+    return res.redirect("/account/login");
   } catch (err) {
-    res.status(500).send("Server error");
+    console.error(err);
+    return res.status(500).send("Server error");
   }
 };
 
-/* Build update page */
+/* ***************************
+ *  Build Update View
+ * ************************** */
 accountController.buildUpdateView = async function (req, res) {
   const nav = await utilities.getNav();
   const account_id = parseInt(req.params.account_id);
@@ -118,28 +157,37 @@ accountController.buildUpdateView = async function (req, res) {
   });
 };
 
-/* Update account info */
+/* ***************************
+ *  Update Account Info
+ * ************************** */
 accountController.updateAccount = async function (req, res) {
   const { account_id, account_firstname, account_lastname, account_email } =
     req.body;
 
-  const result = await accountModel.updateAccount(
-    account_id,
-    account_firstname,
-    account_lastname,
-    account_email,
-  );
+  try {
+    const result = await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email,
+    );
 
-  if (result) {
-    req.flash("notice", "Account updated.");
-    return res.redirect("/account/");
+    if (result) {
+      req.flash("notice", "Account updated successfully.");
+      return res.redirect("/account/");
+    }
+
+    req.flash("notice", "Update failed.");
+    return res.redirect(`/account/update/${account_id}`);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send("Server error");
   }
-
-  req.flash("notice", "Update failed.");
-  res.redirect(`/account/update/${account_id}`);
 };
 
-/* Update password */
+/* ***************************
+ *  Update Password
+ * ************************** */
 accountController.updatePassword = async function (req, res) {
   const { account_id, account_password } = req.body;
 
@@ -149,23 +197,28 @@ accountController.updatePassword = async function (req, res) {
     const result = await accountModel.updatePassword(account_id, hash);
 
     if (result) {
-      req.flash("notice", "Password updated.");
+      req.flash("notice", "Password updated successfully.");
       return res.redirect("/account/");
     }
 
-    req.flash("notice", "Update failed.");
-    res.redirect(`/account/update/${account_id}`);
+    req.flash("notice", "Password update failed.");
+    return res.redirect(`/account/update/${account_id}`);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Server error");
+    return res.status(500).send("Server error");
   }
 };
 
-/* Logout */
+/* ***************************
+ *  Logout
+ * ************************** */
 accountController.logout = function (req, res) {
   res.clearCookie("jwt");
-  req.flash("notice", "Logged out.");
+  req.flash("notice", "You have been logged out.");
   res.redirect("/");
 };
 
+/* ***************************
+ *  Export Controller
+ * ************************** */
 module.exports = accountController;
