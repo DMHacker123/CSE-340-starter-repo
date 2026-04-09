@@ -2,9 +2,6 @@
 const { Pool } = require("pg");
 require("dotenv").config();
 
-// Create the PostgreSQL pool
-const { Pool } = require("pg");
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -12,9 +9,7 @@ const pool = new Pool({
   },
 });
 
-module.exports = pool;
-
-// Query wrapper for easier logging and error handling
+// Export ONLY ONE thing: the query wrapper
 module.exports = {
   async query(text, params) {
     try {
