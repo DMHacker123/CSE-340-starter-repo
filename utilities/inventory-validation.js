@@ -1,5 +1,5 @@
-const { body, validationResult } = require("express-validator")
-const utilities = require(".")
+const { body, validationResult } = require("express-validator");
+const utilities = require(".");
 
 /* ******************************
  * Validation Rules for Classification
@@ -11,8 +11,10 @@ const classificationValidate = [
     .withMessage("Classification name is required.")
     .bail()
     .matches(/^[A-Za-z]+$/) // letters ONLY (match your UI)
-    .withMessage("Classification name must contain only alphabetic characters.")
-]
+    .withMessage(
+      "Classification name must contain only alphabetic characters.",
+    ),
+];
 
 /* ******************************
  * Validation Rules for Inventory
@@ -72,21 +74,23 @@ const inventoryValidate = [
   body("classification_id")
     .isInt()
     .withMessage("Please select a classification.")
-    .bail()
-]
+    .bail(),
+];
 
 /* ******************************
  * Handle Validation Errors
  ****************************** */
 async function handleErrors(req, res, next) {
-  const errors = validationResult(req)
+  const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    const nav = await utilities.getNav()
+    const nav = await utilities.getNav();
 
-    let classificationList = ""
+    let classificationList = "";
     if (!req.originalUrl.includes("classification")) {
-      classificationList = await utilities.buildClassificationList(req.body.classification_id)
+      classificationList = await utilities.buildClassificationList(
+        req.body.classification_id,
+      );
     }
 
     return res.render(
@@ -95,18 +99,18 @@ async function handleErrors(req, res, next) {
         : "inventory/add-inventory",
       {
         title: req.originalUrl.includes("classification")
-        ? "Add New Classification"
-        : "Add New Vehicle",
+          ? "Add New Classification"
+          : "Add New Vehicle",
         nav,
         errors: errors.array(),
         classificationList,
         message: null, // ✅ FIX (prevents crash)
-        ...req.body
-      }
-    )
+        ...req.body,
+      },
+    );
   }
 
-  next()
+  next();
 }
 
 /* ******************************
@@ -115,5 +119,5 @@ async function handleErrors(req, res, next) {
 module.exports = {
   classificationValidate,
   inventoryValidate,
-  handleErrors
-}
+  handleErrors,
+};
