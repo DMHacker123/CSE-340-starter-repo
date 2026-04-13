@@ -93,17 +93,51 @@ Util.buildVehicleDetail = function (data) {
 
   return `
     <div class="vehicle-detail">
-      <div class="vehicle-image">
-        <img src="${data.inv_image}" alt="${data.inv_make} ${data.inv_model}">
-      </div>
-      <div class="vehicle-info">
-        <h2>${data.inv_year} ${data.inv_make} ${data.inv_model}</h2>
-        <p><strong>Price:</strong> $${data.inv_price}</p>
-        <p><strong>Mileage:</strong> ${data.inv_miles} miles</p>
-        <p><strong>Color:</strong> ${data.inv_color}</p>
-        <p><strong>Description:</strong> ${data.inv_description}</p>
-      </div>
-    </div>
+
+  <div class="vehicle-info">
+    <h2><%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+
+    <p><strong>Year:</strong> <%= vehicle.inv_year %></p>
+    <p><strong>Price:</strong> $<%= vehicle.inv_price %></p>
+    <p><strong>Miles:</strong> <%= vehicle.inv_miles %> miles</p>
+    <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
+    <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
+
+    <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_model %>" />
+  </div>
+
+  <div class="reviews-section">
+    <h2>Leave a Review</h2>
+
+    <% if (accountData) { %>
+      <form action="/reviews/add" method="POST">
+        <textarea name="review_text" required></textarea>
+        <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+        <button type="submit">Submit Review</button>
+      </form>
+    <% } else { %>
+      <p>Please log in to leave a review.</p>
+    <% } %>
+
+    <h2>Customer Reviews</h2>
+
+    <% if (reviews && reviews.length > 0) { %>
+      <% reviews.forEach(review => { %>
+        <div class="review">
+          <strong>
+            <%= review.account_firstname %> <%= review.account_lastname %>
+          </strong>
+          <p><%= review.review_text %></p>
+          <small><%= review.review_date %></small>
+        </div>
+        <hr>
+      <% }) %>
+    <% } else { %>
+      <p>No reviews yet.</p>
+    <% } %>
+  </div>
+
+</div>
   `;
 };
 
@@ -139,6 +173,15 @@ function checkEmployeeOrAdmin(req, res, next) {
   return res.redirect("/account/login");
 }
 
+function checkLogin(req, res, next) {
+  if (res.locals.accountData) {
+    return next();
+  }
+
+  req.flash("notice", "Please log in.");
+  return res.redirect("/account/login");
+}
+
 /* EXPORT EVERYTHING */
 module.exports = {
   getNav: Util.getNav,
@@ -148,4 +191,5 @@ module.exports = {
   buildClassificationList: Util.buildClassificationList,
   checkJWTToken,
   checkEmployeeOrAdmin,
+  checkLogin,
 };

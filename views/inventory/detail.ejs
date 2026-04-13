@@ -22,6 +22,39 @@
         <%= vehicle.inv_description %>
     </p>
     <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_model %>" />
+
+    <h2>Leave a Review</h2>
+    
+    <% if (accountData) { %>
+        <form action="/reviews/add" method="POST">
+            <textarea name="review_text" required></textarea>
+            <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+            <button type="submit">Submit Review</button>
+        </form>
+        <% } else { %>
+            <p>Please log in to leave a review.</p>
+            <% } %>
+            <h2>Customer Reviews</h2>
+            
+            <% if (reviews && reviews.length> 0) { %>
+                <% reviews.forEach(review=> { %>
+                    <div>
+                        <strong>
+                            <%= review.account_firstname %>
+                                <%= review.account_lastname %>
+                        </strong>
+                        <p>
+                            <%= review.review_text %>
+                        </p>
+                        <small>
+                            <%= review.review_date %>
+                        </small>
+                    </div>
+                    <hr>
+                    <% }) %>
+                        <% } else { %>
+                            <p>No reviews yet.</p>
+                            <% } %>
 </div>
 
 <a href="javascript:history.back()">← Back</a>

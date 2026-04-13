@@ -31,8 +31,6 @@ accountController.buildLogin = async function (req, res) {
 
 /* Login process */
 accountController.accountLogin = async function (req, res) {
-  console.log("SECRET:", process.env.ACCESS_TOKEN_SECRET);
-
   const { account_email, account_password } = req.body;
   const nav = await utilities.getNav();
 

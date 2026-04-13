@@ -1,6 +1,6 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
-
+const reviewModel = require("../models/review-model");
 const invController = {};
 
 /* ***************************
@@ -126,19 +126,29 @@ invController.addInventory = async function (req, res) {
 /* ***************************
  * Build Inventory Detail View
  *************************** */
-invController.buildByInventoryId = async function (req, res) {
-  const nav = await utilities.getNav();
-  const invId = req.params.id;
+invController.buildByInventoryId = async function (req, res, next) {
+  try {
+    const nav = await utilities.getNav();
 
-  const vehicle = await invModel.getInventoryById(invId);
+    const invId = req.params.id; // ✅ FIRST
 
-  if (!vehicle) throw new Error("Vehicle not found");
+    console.log("INV ID:", invId);
 
-  res.render("inventory/detail", {
-    title: `${vehicle.inv_make} ${vehicle.inv_model}`,
-    nav,
-    vehicle,
-  });
+    const vehicle = await invModel.getInventoryById(invId);
+
+    const reviews = await reviewModel.getReviewsByInvId(invId);
+
+    console.log("REVIEWS:", reviews);
+
+    res.render("inventory/detail", {
+      title: vehicle.inv_make + " " + vehicle.inv_model,
+      nav,
+      vehicle,
+      reviews: reviews || [],
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 /* ***************************

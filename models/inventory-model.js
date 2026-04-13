@@ -1,12 +1,12 @@
-const pool = require("../database/")
+const pool = require("../database/");
 
 /* ***************************
  * Get all classifications
  * ************************** */
 async function getClassifications() {
   return await pool.query(
-    "SELECT * FROM public.classification ORDER BY classification_name"
-  )
+    "SELECT * FROM public.classification ORDER BY classification_name",
+  );
 }
 
 /* ***************************
@@ -19,12 +19,12 @@ async function getInventoryByClassificationId(classification_id) {
        JOIN public.classification AS c
        ON i.classification_id = c.classification_id
        WHERE i.classification_id = $1`,
-      [classification_id]
-    )
-    return data.rows
+      [classification_id],
+    );
+    return data.rows;
   } catch (error) {
-    console.error("getInventoryByClassificationId error:", error)
-    throw error   // ✅ VERY IMPORTANT
+    console.error("getInventoryByClassificationId error:", error);
+    throw error;
   }
 }
 
@@ -38,12 +38,12 @@ async function getInventoryById(inv_id) {
        JOIN public.classification AS c
        ON i.classification_id = c.classification_id
        WHERE i.inv_id = $1`,
-      [inv_id]
-    )
-    return data.rows[0]
+      [inv_id],
+    );
+    return data.rows[0];
   } catch (error) {
-    console.error("getInventoryById error:", error)
-    throw error   // ✅ VERY IMPORTANT
+    console.error("getInventoryById error:", error);
+    throw error;
   }
 }
 
@@ -53,12 +53,12 @@ async function addClassification(classification_name) {
       INSERT INTO classification (classification_name)
       VALUES ($1)
       RETURNING *
-    `
-    const result = await pool.query(sql, [classification_name])
-    return result.rows[0]
+    `;
+    const result = await pool.query(sql, [classification_name]);
+    return result.rows[0];
   } catch (error) {
-    console.error("addClassification error:", error)
-    throw error
+    console.error("addClassification error:", error);
+    throw error;
   }
 }
 
@@ -72,7 +72,7 @@ async function addInventory(
   inv_price,
   inv_miles,
   inv_color,
-  classification_id
+  classification_id,
 ) {
   const sql = `
     INSERT INTO inventory (
@@ -89,7 +89,7 @@ async function addInventory(
     )
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
     RETURNING *
-  `
+  `;
 
   return await pool.query(sql, [
     inv_make,
@@ -101,17 +101,17 @@ async function addInventory(
     inv_price,
     inv_miles,
     inv_color,
-    classification_id
-  ])
+    classification_id,
+  ]);
 }
 
 async function getInventoryById(inv_id) {
   try {
-    const sql = "SELECT * FROM public.inventory WHERE inv_id = $1"
-    const result = await pool.query(sql, [inv_id])
-    return result.rows[0]
+    const sql = "SELECT * FROM public.inventory WHERE inv_id = $1";
+    const result = await pool.query(sql, [inv_id]);
+    return result.rows[0];
   } catch (error) {
-    console.error("getInventoryById error:", error)
+    console.error("getInventoryById error:", error);
   }
 }
 
@@ -120,11 +120,11 @@ async function getInventoryById(inv_id) {
  * ************************** */
 async function deleteInventory(inv_id) {
   try {
-    const sql = "DELETE FROM public.inventory WHERE inv_id = $1"
-    const data = await pool.query(sql, [inv_id])
-    return data.rowCount
+    const sql = "DELETE FROM public.inventory WHERE inv_id = $1";
+    const data = await pool.query(sql, [inv_id]);
+    return data.rowCount;
   } catch (error) {
-    console.error("Delete error: " + error)
+    console.error("Delete error: " + error);
   }
 }
 
@@ -139,7 +139,7 @@ async function updateInventory(
   inv_price,
   inv_miles,
   inv_color,
-  classification_id
+  classification_id,
 ) {
   try {
     const sql = `
@@ -156,7 +156,7 @@ async function updateInventory(
           classification_id = $10
       WHERE inv_id = $11
       RETURNING *
-    `
+    `;
 
     const data = await pool.query(sql, [
       inv_make,
@@ -169,13 +169,13 @@ async function updateInventory(
       inv_miles,
       inv_color,
       classification_id,
-      inv_id
-    ])
+      inv_id,
+    ]);
 
-    return data.rows[0]
+    return data.rows[0];
   } catch (error) {
-    console.error("updateInventory error:", error)
-    return null
+    console.error("updateInventory error:", error);
+    return null;
   }
 }
 
@@ -186,5 +186,5 @@ module.exports = {
   addClassification,
   addInventory,
   deleteInventory,
-  updateInventory
-}
+  updateInventory,
+};

@@ -154,7 +154,7 @@ nav a:hover {
 .vehicle-detail {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 2rem;
   background: #fff;
   padding: 20px;
   border-radius: 10px;
@@ -167,6 +167,16 @@ nav a:hover {
 
 .vehicle-info p {
   margin: 0.4rem 0;
+}
+
+.vehicle-info img {
+  width: 100%;
+  max-width: 500px;
+}
+
+.reviews-section textarea {
+  width: 100%;
+  min-height: 80px;
 }
 
 /* ========= FORM ========= */
@@ -269,6 +279,7 @@ a:focus {
   .home-grid,
   .upgrade-grid,
   .vehicle-detail {
+    display: grid;
     grid-template-columns: 1fr;
   }
 

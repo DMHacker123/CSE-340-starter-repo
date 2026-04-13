@@ -1,3 +1,4 @@
+const reviewRoute = require("./routes/reviewRoute");
 const express = require("express");
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
@@ -77,6 +78,7 @@ app.use(express.static("public"));
 app.get("/", utilities.handleErrors(baseController.buildHome));
 app.use("/inv", inventoryRoute);
 app.use("/account", accountRoute);
+app.use("/reviews", reviewRoute);
 
 /* ***********************
  * 404 Not Found Route
